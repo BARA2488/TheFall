@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://bk1rp5sw70epf" path="res://MainMenu/parse_input.cs" id="4_ajn5b"]
 [ext_resource type="AudioStream" uid="uid://dwo0sdv5cm05n" path="res://MainMenu/навелся на кнопку.mp3" id="6_kbpwf"]
 [ext_resource type="AudioStream" uid="uid://c237u6aovu1ei" path="res://MainMenu/выбрал.mp3" id="7_jdgnk"]
-[ext_resource type="AudioStream" uid="uid://6utlr5crih63" path="res://Player/Легкий ветер.mp3" id="8_r0x8f"]
+[ext_resource type="AudioStream" uid="uid://6utlr5crih63" path="res://Player/PlayerSounds/Легкий ветер.mp3" id="8_r0x8f"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_nhkf3"]
 font_size = 32

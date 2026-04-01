@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://6utlr5crih63"
+path="res://.godot/imported/Легкий ветер.mp3-8ad4ddf1babbe061f1c8b8245329218d.mp3str"
+
+[deps]
+
+source_file="res://Player/PlayerSounds/Легкий ветер.mp3"
+dest_files=["res://.godot/imported/Легкий ветер.mp3-8ad4ddf1babbe061f1c8b8245329218d.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,83 @@
+[gd_scene format=3 uid="uid://cm3txq1ba2d2m"]
+
+[ext_resource type="Script" uid="uid://b6hus63151e8d" path="res://Player/Player.cs" id="1_4ntmi"]
+[ext_resource type="Texture2D" uid="uid://dyu4vljdntexm" path="res://Player/Player.png" id="2_btcbx"]
+[ext_resource type="Shader" uid="uid://b5h6eyfg1wlb4" path="res://dev_room.gdshader" id="3_00tjw"]
+[ext_resource type="Texture2D" uid="uid://3v7jsy7iuhl6" path="res://Player/blood.png" id="3_btcbx"]
+[ext_resource type="AudioStream" uid="uid://6utlr5crih63" path="res://Player/Легкий ветер.mp3" id="4_fhl08"]
+[ext_resource type="Texture2D" uid="uid://cct6dgkc1hp4e" path="res://Blocks/bk.png" id="5_k53q1"]
+[ext_resource type="Texture2D" uid="uid://8ktr5ejl4ayk" path="res://Player/Player-dead.png" id="6_fhl08"]
+[ext_resource type="AudioStream" uid="uid://b1sjg8btpc6mw" path="res://Player/звук скольжения по поверхности (mp3cut.net).mp3" id="7_vtle1"]
+[ext_resource type="AudioStream" uid="uid://xn4gwl7punvg" path="res://Player/the-dull-sound-of-a-soft-object-falling.mp3" id="8_od3ui"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_00tjw"]
+shader = ExtResource("3_00tjw")
+shader_parameter/alpha = 2.44
+shader_parameter/inner_radius = 0.295
+shader_parameter/outer_radius = 2.76
+
+[node name="Player" type="CharacterBody2D" unique_id=1175865066]
+script = ExtResource("1_4ntmi")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=874711803]
+polygon = PackedVector2Array(-13, 16, 13, 16, 15, 10, 15, -13, 13, -15, -13, -15, -15, -13, -15, 10)
+
+[node name="PlayerSprite" type="Sprite2D" parent="." unique_id=533097931]
+modulate = Color(1.0845727, 1.0845727, 1.0845727, 1)
+texture = ExtResource("2_btcbx")
+
+[node name="PlayerCamera" type="Camera2D" parent="." unique_id=1503544508]
+position = Vector2(0, 77)
+zoom = Vector2(2.8, 2.8)
+process_callback = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=866748559]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=542856996]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer" unique_id=551483168]
+material = SubResource("ShaderMaterial_00tjw")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1484691827]
+visible = false
+z_index = 1
+position = Vector2(0, 31)
+texture = ExtResource("3_btcbx")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=811217637]
+stream = ExtResource("4_fhl08")
+volume_db = -5.0
+autoplay = true
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=920627930]
+z_index = -1
+position = Vector2(0, 262)
+scale = Vector2(63.59375, 57.27648)
+texture = ExtResource("5_k53q1")
+
+[node name="Sprite2D3" type="Sprite2D" parent="." unique_id=568826760]
+visible = false
+modulate = Color(1, 0, 0, 1)
+texture = ExtResource("6_fhl08")
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="." unique_id=465281746]
+stream = ExtResource("7_vtle1")
+volume_db = -10.0
+
+[node name="fallsound" type="AudioStreamPlayer" parent="." unique_id=286580140]
+stream = ExtResource("8_od3ui")
+volume_db = -20.0

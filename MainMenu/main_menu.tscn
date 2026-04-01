@@ -1,0 +1,223 @@
+[gd_scene format=3 uid="uid://cv8n4nwicfxbs"]
+
+[ext_resource type="Texture2D" uid="uid://cxdoh653ud3d1" path="res://MainMenu/Снимок экрана 2026-03-31 165143.png" id="1_3w4mj"]
+[ext_resource type="Texture2D" uid="uid://cct6dgkc1hp4e" path="res://Blocks/bk.png" id="1_5de1l"]
+[ext_resource type="Script" uid="uid://xflwyfc64njw" path="res://MainMenu/MainMenu.cs" id="1_ajn5b"]
+[ext_resource type="Texture2D" uid="uid://c5gk335bmok53" path="res://MainMenu/logo.png" id="1_nhkf3"]
+[ext_resource type="Script" uid="uid://bk1rp5sw70epf" path="res://MainMenu/parse_input.cs" id="4_ajn5b"]
+[ext_resource type="AudioStream" uid="uid://dwo0sdv5cm05n" path="res://MainMenu/навелся на кнопку.mp3" id="6_kbpwf"]
+[ext_resource type="AudioStream" uid="uid://c237u6aovu1ei" path="res://MainMenu/выбрал.mp3" id="7_jdgnk"]
+[ext_resource type="AudioStream" uid="uid://6utlr5crih63" path="res://Player/Легкий ветер.mp3" id="8_r0x8f"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_nhkf3"]
+font_size = 32
+font_color = Color(1, 0.95, 0, 1)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ajn5b"]
+blend_mode = 1
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_po2gx"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="Environment" id="Environment_kbpwf"]
+background_mode = 3
+tonemap_mode = 3
+tonemap_exposure = 1.49
+tonemap_white = 9.6
+glow_enabled = true
+glow_normalized = true
+glow_strength = 1.3
+glow_bloom = 0.3
+glow_hdr_threshold = 0.0
+glow_hdr_scale = 1.4
+
+[sub_resource type="Animation" id="Animation_po2gx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewport/Control/version:label_settings:font_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [32]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SubViewport/Control/version:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_kbpwf"]
+resource_name = "version_shading"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewport/Control/version:label_settings:font_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [16, 17, 16]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/path = NodePath("SubViewport/Control/version:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -0.08726646, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jdgnk"]
+_data = {
+&"RESET": SubResource("Animation_po2gx"),
+&"version_shading": SubResource("Animation_kbpwf")
+}
+
+[node name="MainMenu" type="Node2D" unique_id=1531508745]
+script = ExtResource("1_ajn5b")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=181808063]
+disable_3d = true
+size = Vector2i(1920, 1080)
+
+[node name="Control" type="Control" parent="SubViewport" unique_id=1502599660]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="SubViewport/Control" unique_id=1657001342]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_5de1l")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewport/Control" unique_id=345387962]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -687.0
+offset_top = -280.0
+offset_right = -16.0
+offset_bottom = 128.0
+grow_horizontal = 0
+grow_vertical = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="SubViewport/Control/VBoxContainer" unique_id=928280519]
+layout_mode = 2
+texture = ExtResource("1_nhkf3")
+
+[node name="PlayButton" type="Button" parent="SubViewport/Control/VBoxContainer" unique_id=2016994452]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Play"
+
+[node name="SettingButton" type="Button" parent="SubViewport/Control/VBoxContainer" unique_id=1338230057]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+disabled = true
+text = "Setting
+"
+
+[node name="ExitButton" type="Button" parent="SubViewport/Control/VBoxContainer" unique_id=274225314]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Exit
+"
+
+[node name="version" type="Label" parent="SubViewport/Control" unique_id=1308457502]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -299.0
+offset_top = -45.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "version: 0.0.1-alpha"
+label_settings = SubResource("LabelSettings_nhkf3")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=733435995]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=316762769]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control" unique_id=874329236]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_3w4mj")
+
+[node name="main" type="TextureRect" parent="CanvasLayer/Control" unique_id=1922472977]
+material = SubResource("CanvasItemMaterial_ajn5b")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_po2gx")
+script = ExtResource("4_ajn5b")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1092099798]
+environment = SubResource("Environment_kbpwf")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=959512379]
+libraries/ = SubResource("AnimationLibrary_jdgnk")
+
+[node name="Inside" type="AudioStreamPlayer" parent="." unique_id=676654279]
+stream = ExtResource("6_kbpwf")
+
+[node name="Select" type="AudioStreamPlayer" parent="." unique_id=277889476]
+stream = ExtResource("7_jdgnk")
+
+[node name="Ambient" type="AudioStreamPlayer" parent="." unique_id=781501570]
+stream = ExtResource("8_r0x8f")
+
+[connection signal="mouse_entered" from="SubViewport/Control/VBoxContainer/PlayButton" to="." method="_on_play_button_mouse_entered"]
+[connection signal="pressed" from="SubViewport/Control/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="mouse_entered" from="SubViewport/Control/VBoxContainer/SettingButton" to="." method="_on_setting_button_mouse_entered"]
+[connection signal="mouse_entered" from="SubViewport/Control/VBoxContainer/ExitButton" to="." method="_on_exit_button_mouse_entered"]
+[connection signal="pressed" from="SubViewport/Control/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]

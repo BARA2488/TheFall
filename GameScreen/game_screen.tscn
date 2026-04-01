@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bmdw6fx7h6mnb"]
+
+[ext_resource type="Script" uid="uid://dpgv8f6184jl1" path="res://GameScreen/GameScreen.cs" id="1_cyj41"]
+[ext_resource type="Texture2D" uid="uid://d0savcapofhrx" path="res://Tiles/PlatformTile.png" id="2_cyj41"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hmtd7"]
+texture = ExtResource("2_cyj41")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="TileSet" id="TileSet_rlmek"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 1
+sources/1 = SubResource("TileSetAtlasSource_hmtd7")
+
+[node name="GameScreen" type="Node2D" unique_id=1799898057]
+script = ExtResource("1_cyj41")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=736444848]
+tile_set = SubResource("TileSet_rlmek")

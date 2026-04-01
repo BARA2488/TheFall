@@ -1,0 +1,100 @@
+[gd_scene format=3 uid="uid://dxwp6ceof4len"]
+
+[ext_resource type="Script" uid="uid://bqwpwb7a4x5s6" path="res://Tiles/Light.cs" id="1_hgk55"]
+[ext_resource type="Texture2D" uid="uid://daklhgsowvkxe" path="res://Tiles/light.png" id="1_ixn17"]
+[ext_resource type="Texture2D" uid="uid://bwpjhwxqk3d5d" path="res://Tiles/light_texture.png" id="3_asl4r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hgk55"]
+size = Vector2(3, 19.781086)
+
+[sub_resource type="Animation" id="Animation_asl4r"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_ln0a1"]
+resource_name = "left_w"
+length = 1.4666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0009999999, 0.3, 0.36, 0.44, 0.72, 0.9, 1.2, 1.466),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.17453292519943295, 0.19198621771937624, 0.17453292519943295, -0.017453292, -0.03490658503988659, 0.017453292, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_hgk55"]
+resource_name = "right_w"
+length = 1.466
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.36, 0.44, 0.72, 0.9, 1.2, 1.466),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.17453292519943295, -0.19198621771937624, -0.17453292519943295, 0.017453292519943295, 0.03490658503988659, -0.017453292519943295, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_122nq"]
+_data = {
+&"RESET": SubResource("Animation_asl4r"),
+&"left_w": SubResource("Animation_ln0a1"),
+&"right_w": SubResource("Animation_hgk55")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_asl4r"]
+size = Vector2(3, 20.165066)
+
+[node name="light" type="StaticBody2D" unique_id=1294546117]
+script = ExtResource("1_hgk55")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1013961146]
+position = Vector2(0, 6)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=371642923]
+position = Vector2(7.3047285, 44.357933)
+rotation = -0.5235988
+shape = SubResource("RectangleShape2D_hgk55")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1288798212]
+z_index = 1
+position = Vector2(0, -62)
+texture = ExtResource("1_ixn17")
+offset = Vector2(0, 64)
+
+[node name="PointLight2D" type="PointLight2D" parent="Sprite2D" unique_id=415439460]
+position = Vector2(0, 115)
+texture = ExtResource("3_asl4r")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=282917257]
+libraries/ = SubResource("AnimationLibrary_122nq")
+
+[node name="Area2D2" type="Area2D" parent="." unique_id=1469177962]
+position = Vector2(0, 6)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2" unique_id=1292581668]
+position = Vector2(-6.7087336, 44.191666)
+rotation = 0.5235988
+shape = SubResource("RectangleShape2D_asl4r")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Area2D2" to="." method="_on_area_2d_2_body_entered"]

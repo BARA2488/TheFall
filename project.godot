@@ -11,18 +11,12 @@ config_version=5
 [application]
 
 config/name="TheFall"
-run/main_scene="uid://cv8n4nwicfxbs"
+run/main_scene="uid://cts7o1rjfamia"
 config/features=PackedStringArray("4.6", "C#", "Forward Plus")
 
 [autoload]
 
 Transition="*uid://bddinbhkhcksx"
-
-[display]
-
-window/size/viewport_width=1920
-window/size/viewport_height=1080
-window/size/mode=3
 
 [dotnet]
 

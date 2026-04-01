@@ -1,0 +1,149 @@
+using Godot;
+using System;
+using System.Data;
+using System.Threading.Tasks;
+
+public partial class Player : CharacterBody2D
+{
+	private float speed = 100.0f;
+	private float accel = 260f;
+	private float jumpVelocity = -220.0f;
+	private float gravity = 500.0f;
+	private  float FallTime = 0;
+	private int curerntDirection = 0;
+
+	//dash
+	private float dashSpeed = 270.0f;
+	private float DASH_TIME = 0.1f;
+	private float dash_timer = 0.0f;
+	private float dash_cd_timer = 0.0f;
+	private float DASH_COLDOWN = 0.7f;
+
+	private Sprite2D sprite;
+	private Sprite2D deadSprite;
+	private AudioStreamPlayer fallSound;
+	private AudioStreamPlayer frictionSound;
+	private AudioStreamPlayer fallSmashSound;
+	private ColorRect deathScreen;
+
+	private bool was_on_floor = false;
+	private float fall_speed_threshold = 700.0f;
+
+	private Sprite2D deadBody;
+
+	private bool invicible = false;
+
+    public override void _Ready()
+    {
+		AddToGroup("player");
+        sprite = GetNode<Sprite2D>("PlayerSprite");
+        deadSprite = GetNode<Sprite2D>("Sprite2D");
+		fallSound = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
+		frictionSound = GetNode<AudioStreamPlayer>("AudioStreamPlayer2");
+		fallSmashSound = GetNode<AudioStreamPlayer>("fallsound");
+		deathScreen = GetNode<ColorRect>("CanvasLayer/ColorRect");
+		deadBody = GetNode<Sprite2D>("Sprite2D3");
+
+		fallSound.Stream._HasLoop();
+		fallSound.Play();
+	}
+
+
+	public override void _PhysicsProcess(double delta)
+	{
+		if(Input.IsActionJustPressed("exit"))
+		{
+			Exit();
+		}
+		
+		if(IsOnFloor() && Input.IsActionJustPressed("jump"))
+		{
+			Velocity = new Vector2(Velocity.X, jumpVelocity);
+		}
+		else
+		{
+			Velocity = new Vector2(Velocity.X, Velocity.Y + gravity * (float)delta);
+			fallSound.PitchScale += (Velocity.Y / 550) * (float)delta;
+			fallSound.VolumeDb += (Velocity.Y / 300) * (float)delta;
+		}
+		if(IsOnFloor())
+		{
+			fallSound.PitchScale = 1.0f;
+			fallSound.VolumeDb = -5;
+		}
+
+		float direction = Input.GetAxis("move_left", "move_right");
+
+		// текущая горизонтальная скорость
+		float targetSpeed = direction * speed;
+
+		// плавное приближение к цели
+		float newX = Mathf.MoveToward(Velocity.X, targetSpeed, accel * (float)delta);
+		Velocity = new Vector2(newX, Velocity.Y);
+
+
+
+		// обновляем направление, если есть движение
+		if (direction != 0)
+		{
+   			curerntDirection = (int)Mathf.Sign(direction);
+		}
+		
+		//dash
+		if(dash_cd_timer > 0)
+		{
+			dash_cd_timer -= (float)delta;
+		}
+		if(Input.IsActionJustPressed("dash") && dash_cd_timer <= 0)
+		{
+			dash_timer = DASH_TIME;
+			dash_cd_timer = DASH_COLDOWN;
+		}
+		if(dash_timer > 0)
+		{
+			dash_timer -= (float)delta;
+			Velocity = new Vector2(curerntDirection * dashSpeed, Velocity.Y);
+		}
+		
+		float VerticalSpeed = Velocity.Y;
+		MoveAndSlide();
+		
+		if(!was_on_floor &&  IsOnFloor() && invicible == false)
+		{
+			float impact_speed = Mathf.Abs(VerticalSpeed);
+			if(impact_speed > fall_speed_threshold)
+			{
+				_ = HandleImpactAsync();
+			}
+			if(impact_speed > 100 && impact_speed < fall_speed_threshold)
+			{
+				fallSmashSound.Play();
+			}
+		}
+
+		was_on_floor = IsOnFloor();
+	}
+
+	private async Task HandleImpactAsync()
+	{
+		//deadSprite.Visible = true;
+		//deadBody.Visible = true;
+		GetTree().Paused = true;
+		var timer = GetTree().CreateTimer(0.05f);
+		await ToSignal(timer, Timer.SignalName.Timeout);	
+		GD.Print("falled");
+		deathScreen.Visible = true;
+		var timer2 = GetTree().CreateTimer(1.0f);
+		await ToSignal(timer2, Timer.SignalName.Timeout);
+		GetTree().Paused = false;
+		fallSound.Stop();
+		GetTree().ReloadCurrentScene();
+	}
+
+	private async void Exit()
+	{
+		await Transition.Instance.FadeOut();
+		GetTree().ChangeSceneToFile("res://MainMenu/main_menu.tscn");
+		await Transition.Instance.FadeIn();
+	}
+}

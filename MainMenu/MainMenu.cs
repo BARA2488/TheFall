@@ -31,6 +31,7 @@ public partial class MainMenu : Node2D
         await Transition.Instance.FadeIn();
         
     }
+    //close game
     private async void _on_exit_button_pressed()
     {
         selectB.Play();

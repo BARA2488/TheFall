@@ -108,7 +108,7 @@ public partial class Player : CharacterBody2D
 		float VerticalSpeed = Velocity.Y;
 		MoveAndSlide();
 		
-		if(!was_on_floor &&  IsOnFloor() && invicible == false)
+		if(!was_on_floor && IsOnFloor() && invicible == false)
 		{
 			float impact_speed = Mathf.Abs(VerticalSpeed);
 			if(impact_speed > fall_speed_threshold)

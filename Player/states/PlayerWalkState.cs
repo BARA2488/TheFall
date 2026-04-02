@@ -7,6 +7,7 @@ public class PlayerWalkState : PlayerState
     public override void Enter()
     {
         GD.Print("Enter Walk");
+        //player.InputDir = 1;
     }
 
     public override void Update()

@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Godot;
 
 public class PlayerFallState : PlayerState
@@ -13,9 +14,10 @@ public class PlayerFallState : PlayerState
     {
         player.Fall();
         player.Move();
-        if(player.IsOnFloor())
+        if(player.IsOnFloor() && player.Velocity.X == 0)
         {
             stateMachine.ChangeState(player.IdleState);
         }
+        else if (player.IsOnFloor()) {stateMachine.ChangeState(player.WalkState);}
     }
 }

@@ -58,11 +58,6 @@ z_index = 1
 position = Vector2(0, 31)
 texture = ExtResource("3_btcbx")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=811217637]
-stream = ExtResource("4_fhl08")
-volume_db = -5.0
-autoplay = true
-
 [node name="Sprite2D2" type="Sprite2D" parent="." unique_id=920627930]
 z_index = -1
 position = Vector2(0, 262)
@@ -74,10 +69,19 @@ visible = false
 modulate = Color(1, 0, 0, 1)
 texture = ExtResource("6_fhl08")
 
-[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="." unique_id=465281746]
+[node name="sfx" type="Node" parent="." unique_id=661445928]
+
+[node name="sfxLanding" type="AudioStreamPlayer" parent="sfx" unique_id=286580140]
+stream = ExtResource("8_od3ui")
+volume_db = -20.0
+
+[node name="sfxSlide" type="AudioStreamPlayer" parent="sfx" unique_id=465281746]
 stream = ExtResource("7_vtle1")
 volume_db = -10.0
 
-[node name="fallsound" type="AudioStreamPlayer" parent="." unique_id=286580140]
-stream = ExtResource("8_od3ui")
-volume_db = -20.0
+[node name="sfxAmbient" type="AudioStreamPlayer" parent="sfx" unique_id=811217637]
+stream = ExtResource("4_fhl08")
+volume_db = -5.0
+autoplay = true
+
+[node name="sfxFall" type="AudioStreamPlayer" parent="sfx" unique_id=423591429]

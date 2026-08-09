@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Numerics;
 
 public partial class MainMenu : Node2D
 {   
@@ -7,8 +8,12 @@ public partial class MainMenu : Node2D
     private AudioStreamPlayer inB;
     private AudioStreamPlayer selectB;
     private AudioStreamPlayer Ambient;
+    private Sprite2D paralax;
+    private Node2D bk;
     public override void _Ready()
     {
+        paralax = GetNode<Sprite2D>("Paralax");
+        bk = GetNode<Node2D>("SceneForMainMenu");
         animation = GetNode<AnimationPlayer>("AnimationPlayer");
         Ambient = GetNode<AudioStreamPlayer>("Ambient");
         inB = GetNode<AudioStreamPlayer>("Inside");
@@ -17,6 +22,17 @@ public partial class MainMenu : Node2D
 
         Ambient.Play();
         Ambient.Stream._HasLoop();
+    }
+    public override void _Process(double delta)
+    {
+        //paralax.Position = new Vector2(1498.0f + GetGlobalMousePosition().X * -1 / 15, 539.0f);
+        //bk.Position = new Vector2(960.0f + GetGlobalMousePosition().X * -1 / 50, 540.0f);
+
+        //var start_pos = new Vector2(960f, 540f);
+        //var target_pos = new Vector2(60f, 540f);
+        //float target_pos = Mathf.MoveToward(bk.GlobalPosition.X, GetGlobalMousePosition().X * -1 / 15, 500 * (float)delta);
+        //bk.Position = new Godot.Vector2(target_pos, 540f);
+        //GD.Print(target_pos);
     }
 
     private async void _on_play_button_pressed()
@@ -27,7 +43,7 @@ public partial class MainMenu : Node2D
         ParseInput.SetVpNull();
         
         await Transition.Instance.FadeOut();
-        GetTree().ChangeSceneToFile("res://dev_room.tscn");
+        GetTree().ChangeSceneToFile("res://DevRoom/dev_room.tscn");
         await Transition.Instance.FadeIn();
         
     }

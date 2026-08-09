@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://2vrsa7w1e638"]
+
+[ext_resource type="Script" uid="uid://cwniqjnc4i2mm" path="res://Object/Door/Door.cs" id="1_cdky1"]
+[ext_resource type="Texture2D" uid="uid://chjkj2ur2lvxa" path="res://Object/Door/door_open.png" id="2_yw1wy"]
+[ext_resource type="Texture2D" uid="uid://dn2thwi6st57m" path="res://Object/Door/door.png" id="3_lgvr2"]
+[ext_resource type="AudioStream" uid="uid://c8hdd77uybmo4" path="res://Object/Door/OpenDoor.mp3" id="4_mq00v"]
+[ext_resource type="AudioStream" uid="uid://ch3bewr1etjo0" path="res://Object/Door/CloseDoor.mp3" id="5_bqbum"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mq00v"]
+size = Vector2(38, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bqbum"]
+size = Vector2(8, 62)
+
+[node name="Door" type="Node2D" unique_id=1059120577]
+script = ExtResource("1_cdky1")
+
+[node name="DoorOpen" type="Sprite2D" parent="." unique_id=1523424226]
+visible = false
+position = Vector2(-14, 0)
+texture = ExtResource("2_yw1wy")
+
+[node name="DoorClose" type="Sprite2D" parent="." unique_id=1840700445]
+texture = ExtResource("3_lgvr2")
+
+[node name="ActiveZone" type="Area2D" parent="." unique_id=619829465]
+
+[node name="active_radius" type="CollisionShape2D" parent="ActiveZone" unique_id=658232395]
+shape = SubResource("RectangleShape2D_mq00v")
+debug_color = Color(0.32267833, 0.6248632, 0, 0.41960785)
+
+[node name="collision" type="StaticBody2D" parent="." unique_id=2138882800]
+
+[node name="door_collision" type="CollisionShape2D" parent="collision" unique_id=1256618697]
+shape = SubResource("RectangleShape2D_bqbum")
+debug_color = Color(0.9950287, 0, 0.21999162, 0.41960785)
+
+[node name="OpenDoorSound" type="AudioStreamPlayer" parent="." unique_id=1148649145]
+stream = ExtResource("4_mq00v")
+
+[node name="CloseDoorSound" type="AudioStreamPlayer" parent="." unique_id=520712539]
+stream = ExtResource("5_bqbum")
+
+[connection signal="body_entered" from="ActiveZone" to="." method="_on_active_zone_body_entered"]
+[connection signal="body_exited" from="ActiveZone" to="." method="_on_active_zone_body_exited"]

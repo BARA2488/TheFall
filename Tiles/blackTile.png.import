@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://chjkj2ur2lvxa"
-path="res://.godot/imported/door_open.png-5e59196349877e216a2dd03b689c3644.ctex"
+uid="uid://dxurys2w0hdfg"
+path="res://.godot/imported/blackTile.png-6302e5cf3c8060d6a8eb78da1d5b01a5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Tiles/door_open.png"
-dest_files=["res://.godot/imported/door_open.png-5e59196349877e216a2dd03b689c3644.ctex"]
+source_file="res://Tiles/blackTile.png"
+dest_files=["res://.godot/imported/blackTile.png-6302e5cf3c8060d6a8eb78da1d5b01a5.ctex"]
 
 [params]
 

@@ -40,12 +40,20 @@ public partial class Player : CharacterBody2D
 	//спрайты
 	private ColorRect DeadScreen;
 
+	//эффекты
+	private GpuParticles2D fallParticles;
+
 	//звуки
 	private AudioStreamPlayer sfxLaning;
 	private AudioStreamPlayer sfxFall;
 
+	//Взаимодействие с интерактивными объектами
+	[Signal] public delegate void ActiveEventHandler();
+
     public override void _Ready()
     {
+		AddToGroup("player");
+
         StateMachine = new PlayerStateMachine();
 
 		IdleState = new PlayerIdleState(this, StateMachine);
@@ -56,6 +64,7 @@ public partial class Player : CharacterBody2D
 
 		//загрузка ресурсов
 		DeadScreen = GetNode<ColorRect>("CanvasLayer/ColorRect");
+		fallParticles = GetNode<GpuParticles2D>("fall_particles");
 		//sfx
 		sfxLaning = GetNode<AudioStreamPlayer>("sfx/sfxLanding");
     }
@@ -88,7 +97,7 @@ public partial class Player : CharacterBody2D
     }
 
     //Ввод
-    public override void _Input(InputEvent e)
+    public override async void _Input(InputEvent e)
     {
         //Прыжок
 		if(e.IsActionPressed("jump") && IsOnFloor())
@@ -101,6 +110,18 @@ public partial class Player : CharacterBody2D
 			dash_timer = DASH_TIME;
 			dash_cd_timer = DASH_COLDOWN;
 			Dash();
+		}
+		//Взаимодействие 
+		if (Input.IsActionJustPressed("activate"))
+		{
+			Activate();
+		}
+		//Выход
+		if (Input.IsActionJustPressed("exit"))
+		{
+			await Transition.Instance.FadeOut();
+        	GetTree().ChangeSceneToFile("res://MainMenu/main_menu.tscn");
+        	await Transition.Instance.FadeIn();
 		}
     }
 
@@ -130,6 +151,8 @@ public partial class Player : CharacterBody2D
 			if(impact_speed > 100 && impact_speed < fall_speed_threshold)
 			{
 				sfxLaning.Play();
+				//fallParticles.Emitting = false; //в разработке
+				//fallParticles.Emitting = true;
 			}
 		}
 		was_on_floor = IsOnFloor();
@@ -187,4 +210,10 @@ public partial class Player : CharacterBody2D
 		return sound;
 	}
 	*/
+
+	//Взаимодействие
+	public void Activate()
+	{
+		EmitSignal(SignalName.Active);
+	}
 }

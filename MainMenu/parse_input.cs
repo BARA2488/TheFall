@@ -8,15 +8,16 @@ public partial class parse_input : TextureRect
 
 	public override void _Ready()
 	{
-		vp = GetNode<SubViewport>("/root/MainMenu/SubViewport");
+		vp = GetNode<SubViewport>("/root/MainMenu/Test/SubViewport");
 		if(vp == null)
 		{
 			GD.PushError("Error: subviewport not found");
 		}
-		else
+		else if(vp != null)
 		{
-			return;
+			GD.Print("SubViewport: founded.");
 		}
+		//vp.Size = new Vector2I(1920,1080);
 	}
 
 	public override void _Input(InputEvent @event)
